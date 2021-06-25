@@ -36,18 +36,24 @@ s.bind(protocol.PROTOCOL_PORT, function() {
   s.addMembership(protocol.PROTOCOL_MULTICAST_ADDRESS);
 });
 
-let listOfMusicians = [];
+var listOfMusicians = [];
 
 
-function getActiveMusician(){
-	var limitOfActivity = moment().subtract(5, "seconds");
-	for(var m of listOfMusicians){
+function getActiveMusicians(){
+	let limitOfActivity = moment().subtract(5, "seconds");
+	let res = ;
+	for(var id  in listOfMusicians){
+		console.log("id :" + id);
+		let m = listOfMusicians[id];
 		if(moment(m.lastActivity) < limitOfActivity){
-		console.log("too old");
+			console.log("too old : " + m);
 		} else {
-		console.log(m);
+			console.log("musician : " + m);
+			res.push(m);
 		}
 	}
+
+	return res;
 /*
 listOfMusicians.forEach( m => 
 	console.log(now.getUTCSeconds() - m.lastActivity.getUTCSeconds() <= 5));
@@ -73,9 +79,8 @@ s.on('message', function(msg, source) {
 	} else {
 		listOfMusicians[message.uuid].lastActivity = message.timestamp;
 	}
-	//console.log("Data has arrived: " + msg + ". Source port: " + source.port);
-	//console.log(listOfMusicians);
-	console.log(getActiveMusician());
+	console.log(listOfMusicians);
+	console.log(getActiveMusicians());
 });
 
 

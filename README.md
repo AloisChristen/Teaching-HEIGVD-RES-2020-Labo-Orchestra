@@ -110,9 +110,9 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
 | | The auditor will listen. Upon receiving a datagram, it will add the sending musician to the list of active musicians. A musician is remove from the list after 5 seconds without playing. |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | The sound of the instrument and the timestamp |
+| | The sound of the instrument, the timestamp and a UUID |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | The auditor needs a list of active musicians (with id, activeSince, lastActiveTime, Instrument), a map of instrument and their respective sound. A musician needs the instrument he's playing and a map of instrument and their respective sound |
+| | The auditor needs a list of musicians (with uuid, activeSince, lastActiveTime, Instrument) and a map of instrument to their respective sound. A musician needs the instrument he's playing and a map of instrument to their respective sound |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -122,7 +122,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
 | | `JSON.stringify(myObject);` |
 |Question | What is **npm**?  |
-| | Node Package Manager -> the node's package manager. A tool to install & update node's package and their dependencies. |
+| | It's Node's Package Manager. A tool to install & update node's package and their dependencies. |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
 | | `npm install` is used to install a package. With the `--save` flag, the package is added to the dependencies file (package-lock.json). Note that `--save` is useless since npm 5.0, as package are automatically added. |
 |Question | How can we use the `https://www.npmjs.com/` web site?  |
@@ -176,7 +176,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we validate that the whole system works, once we have built our Docker image? |
-| | We use the tester container, and make so functionnal tests |
+| | We use the tester container, and make so functional tests |
 
 
 ## Constraints
