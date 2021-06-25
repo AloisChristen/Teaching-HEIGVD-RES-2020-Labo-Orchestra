@@ -48,7 +48,12 @@ function getActiveMusicians(){
 		console.log("id :" + id);
 		let m = listOfMusicians[id];
 		if(moment(m.lastActivity) >= limitOfActivity){
-			res.push(m);
+			let data_musician = {
+				"uuid" : id,
+				"instrument" : m.instrument,
+				"activeSince" : m.activeSince
+			};
+			res.push(data_musician);
 		}
 	}
 
@@ -78,8 +83,6 @@ socket.on('message', function(msg, source) {
 	} else {
 		listOfMusicians[message.uuid].lastActivity = message.timestamp;
 	}
-	console.log(listOfMusicians);
-	console.log(getActiveMusicians());
 });
 
 
