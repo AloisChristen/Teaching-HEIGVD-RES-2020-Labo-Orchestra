@@ -21,6 +21,8 @@ const instrumentList = require('./instrument.js');
 
 const moment = require('moment');
 
+const net = require('net');
+
 /*
  * We use a standard Node.js module to work with UDP
  */
@@ -30,10 +32,10 @@ const dgram = require('dgram');
  * Let's create a datagram socket. We will use it to listen for datagrams published in the
  * multicast group by thermometers and containing measures
  */
-const s = dgram.createSocket('udp4');
-s.bind(protocol.PROTOCOL_PORT, function() {
+const socket = dgram.createSocket('udp4');
+socket.bind(protocol.PROTOCOL_PORT, function() {
   console.log("Joining multicast group");
-  s.addMembership(protocol.PROTOCOL_MULTICAST_ADDRESS);
+  socket.addMembership(protocol.PROTOCOL_MULTICAST_ADDRESS);
 });
 
 var listOfMusicians = [];
@@ -41,14 +43,11 @@ var listOfMusicians = [];
 
 function getActiveMusicians(){
 	let limitOfActivity = moment().subtract(5, "seconds");
-	let res = ;
+	let res = [];
 	for(var id  in listOfMusicians){
 		console.log("id :" + id);
 		let m = listOfMusicians[id];
-		if(moment(m.lastActivity) < limitOfActivity){
-			console.log("too old : " + m);
-		} else {
-			console.log("musician : " + m);
+		if(moment(m.lastActivity) >= limitOfActivity){
 			res.push(m);
 		}
 	}
@@ -67,7 +66,7 @@ listOfMusicians.forEach( m =>
 /* 
  * This call back is invoked when a new datagram has arrived.
  */
-s.on('message', function(msg, source) {
+socket.on('message', function(msg, source) {
 	let message = JSON.parse(msg);
 	let musician = listOfMusicians[message.uuid];
 	if(musician === undefined){
@@ -84,6 +83,18 @@ s.on('message', function(msg, source) {
 });
 
 
+var server = net.createServer();
 
+server.on("connection", function(socket){
+	socket.write(
+		JSON.stringify(getActiveMusicians())
+		);
+		socket.pipe(socket);
+		socket.destroy();
+});
+
+server.listen(protocol.PROTOCOL_PORT, function(){
+	console.log("Listening on port" + protocol.PROTOCOL_PORT);
+});
 
 
