@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:14.17
 MAINTAINER Olivier Liechti <olivier.liechti@heig-vd.ch>
 
 #

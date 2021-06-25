@@ -80,7 +80,16 @@ function Musician(instrument) {
  * Let's get the thermometer properties from the command line attributes
  * Some error handling wouln't hurt here...
  */
-var instrument = "piano";
+var instrument = process.argv[2];
+
+let validInstruments = Object.keys(instrumentList.INSTRUMENT_TO_SOUND);
+
+if(instrument === undefined || !validInstruments.includes(instrument)){
+		let min = 0;
+		let max = validInstruments.length;
+		let i = Math.floor(Math.random() * (max - min)) + min;
+		instrument = validInstruments[i];
+}	
 
 /*
  * Let's create a new thermoter - the regular publication of measures will
