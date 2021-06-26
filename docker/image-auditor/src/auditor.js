@@ -1,36 +1,40 @@
 /*
- This program simulates a "data collection station", which joins a multicast
- group in order to receive measures published by thermometers (or other sensors).
- The measures are transported in json payloads with the following format:
+ This program simulates someone listening to the orchestra. He will keep a list of 
+ musicians, and can give the actives ones on demand on a TCP port.
 
-   {"timestamp":1394656712850,"location":"kitchen","temperature":22.5}
-
- Usage: to start the station, use the following command in a terminal
-
-   node station.js
+ A musician is active if he played in the last 5 seconds.
+ The list of active musicians is made of their UUID, the instrument they play and the 
+ first time they played. 
 
 */
 
 /*
- * We have defined the multicast address and port in a file, that can be imported both by
- * thermometer.js and station.js. The address and the port are part of our simple 
- * application-level protocol
- */
+	Files required for the auditor
+*/
 const protocol = require('./orchestra-protocol');
 const instrumentList = require('./instrument.js');
-
-const moment = require('moment');
-
-const net = require('net');
 
 /*
  * We use a standard Node.js module to work with UDP
  */
 const dgram = require('dgram');
 
+
+/*
+ * We use moment to make  time related calculs.
+ */
+const moment = require('moment');
+
+/*
+ * We use net to implement a server with TCP protocol.
+ */
+const net = require('net');
+
+
+
 /* 
  * Let's create a datagram socket. We will use it to listen for datagrams published in the
- * multicast group by thermometers and containing measures
+ * multicast group by musicians and containing the music they play.
  */
 const socket = dgram.createSocket('udp4');
 socket.bind(protocol.PROTOCOL_PORT, function() {
@@ -41,31 +45,31 @@ socket.bind(protocol.PROTOCOL_PORT, function() {
 var listOfMusicians = [];
 
 
+/*
+ * This function curate the list of musicians and only return the active ones
+ */
 function getActiveMusicians(){
+	
+	// Any musician that has played since the limit is active
 	let limitOfActivity = moment().subtract(5, "seconds");
+	
+	// Result of the filtering
 	let res = [];
 	for(var id  in listOfMusicians){
-		console.log("id :" + id);
-		let m = listOfMusicians[id];
-		if(moment(m.lastActivity) >= limitOfActivity){
+		let musician = listOfMusicians[id];
+		if(moment(musician.lastActivity) >= limitOfActivity){
+			
+			// We create an object with the desired informations
 			let data_musician = {
 				"uuid" : id,
-				"instrument" : m.instrument,
-				"activeSince" : m.activeSince
+				"instrument" : musician.instrument,
+				"activeSince" : musician.activeSince
 			};
 			res.push(data_musician);
 		}
 	}
 
 	return res;
-/*
-listOfMusicians.forEach( m => 
-	console.log(now.getUTCSeconds() - m.lastActivity.getUTCSeconds() <= 5));
-	return listOfMusicians.filter(function(m) {
-		console.log("now : "  + now + " | timeStamp : " + m);
-		return now.getUTCSeconds() - m.lastActivity.getUTCSeconds() <= 5;
-	});
-*/
 }
 
 /* 
@@ -74,21 +78,29 @@ listOfMusicians.forEach( m =>
 socket.on('message', function(msg, source) {
 	let message = JSON.parse(msg);
 	let musician = listOfMusicians[message.uuid];
+	
+	// If this is a new musician, we add it to the list
 	if(musician === undefined){
 		listOfMusicians[message.uuid] = {
 			instrument: instrumentList.SOUND_TO_INSTRUMENT[message.sound],
 			activeSince: message.timestamp,
 			lastActivity: message.timestamp,
 		};
+	// The musician was already known, we update the lastActivity timestamp
 	} else {
 		listOfMusicians[message.uuid].lastActivity = message.timestamp;
 	}
 });
 
 
+
+/*
+ * Server creation and binding to port for the TCP ressource of actives musicians
+ */
 var server = net.createServer();
 
 server.on("connection", function(socket){
+	// We send the list of active musicians
 	socket.write(
 		JSON.stringify(getActiveMusicians())
 		);
@@ -96,6 +108,7 @@ server.on("connection", function(socket){
 		socket.destroy();
 });
 
+// We listen on the port
 server.listen(protocol.PROTOCOL_PORT, function(){
 	console.log("Listening on port" + protocol.PROTOCOL_PORT);
 });
