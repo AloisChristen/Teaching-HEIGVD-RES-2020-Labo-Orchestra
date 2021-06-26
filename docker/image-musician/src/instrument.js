@@ -1,6 +1,5 @@
-//exports.INSTRUMENT_TO_SOUND = instrumentToSound;
-//exports.SOUND_TO_INSTRUMENT = soundToInstrument;
 
+// Mapping of instruments to their sound
 var instrumentToSound = {
 	"piano"   : "ti-ta-ti",
 	"trumpet" : "pouet",
@@ -9,6 +8,7 @@ var instrumentToSound = {
 	"drum"    : "boum-boum",
 };
 
+// Building reverse mapping
 var soundToInstrument = {};
 for(var instrument in instrumentToSound)
 {
@@ -16,5 +16,6 @@ for(var instrument in instrumentToSound)
     soundToInstrument[sound] = instrument;
 }
 
+// Exports
 exports.INSTRUMENT_TO_SOUND = instrumentToSound;
 exports.SOUND_TO_INSTRUMENT = soundToInstrument;
