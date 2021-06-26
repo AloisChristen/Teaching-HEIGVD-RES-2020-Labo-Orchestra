@@ -4,192 +4,262 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>670</x>
-      <y>170</y>
-      <w>100</w>
-      <h>130</h>
+      <x>300</x>
+      <y>200</y>
+      <w>230</w>
+      <h>60</h>
     </coordinates>
-    <panel_attributes>musician
---
-instrument
-</panel_attributes>
+    <panel_attributes>Musician 1
+Playing Piano
+
+bg=green
+layer=3</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>250</x>
-      <y>180</y>
-      <w>100</w>
-      <h>130</h>
+      <x>280</x>
+      <y>140</y>
+      <w>280</w>
+      <h>140</h>
     </coordinates>
-    <panel_attributes>auditor
+    <panel_attributes>Container 1
 --
- TCP interface
-</panel_attributes>
+docker run -d res/musician piano
+bg=yellow
+layer=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
-      <y>180</y>
-      <w>70</w>
+      <x>520</x>
+      <y>210</y>
+      <w>290</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+UDP sending
+</panel_attributes>
+    <additional_attributes>190.0;120.0;190.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>370</y>
+      <w>220</w>
       <h>50</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;50.0;30.0</additional_attributes>
+    <panel_attributes>Musician 2
+Playing Trumpet
+
+bg=green
+layer=3</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>610</x>
-      <y>200</y>
-      <w>80</w>
-      <h>30</h>
+      <x>280</x>
+      <y>320</y>
+      <w>280</w>
+      <h>120</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+    <panel_attributes>Container 2
+--
+docker run -d res/musician trumpet
+bg=yellow
+layer=2</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
-    <id>UMLInterface</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>270</x>
-      <y>350</y>
-      <w>40</w>
-      <h>70</h>
+      <x>980</x>
+      <y>280</y>
+      <w>170</w>
+      <h>130</h>
     </coordinates>
-    <panel_attributes>TCP</panel_attributes>
+    <panel_attributes>Auditor
+Listenning to orchestra
+--
+list of musicians
+bg=green
+layer=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>960</x>
+      <y>190</y>
+      <w>210</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>Container 4
+--
+docker run -d -p 2205:2205
+res/auditor
+bg=yellow
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>550</y>
+      <w>220</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Musician 3
+Playing Flute
+
+bg=green
+layer=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>280</x>
+      <y>500</y>
+      <w>280</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Container 3
+--
+docker run -d res/musician flute
+bg=yellow
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>690</x>
+      <y>330</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Multicast Group
+--
+239.255.22.5:2205</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>280</x>
-      <y>300</y>
-      <w>30</w>
-      <h>80</h>
+      <x>820</x>
+      <y>350</y>
+      <w>180</w>
+      <h>40</h>
     </coordinates>
-    <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;-
+UDP listening</panel_attributes>
+    <additional_attributes>10.0;20.0;160.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>290</x>
-      <y>290</y>
-      <w>500</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-renvoie ^
-m1=*
-m2=1</panel_attributes>
-    <additional_attributes>420.0;10.0;420.0;80.0;10.0;80.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>340</x>
-      <y>250</y>
-      <w>350</w>
+      <x>510</x>
+      <y>370</y>
+      <w>200</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-m2=*
-m1=*
-actifs</panel_attributes>
-    <additional_attributes>330.0;20.0;10.0;20.0</additional_attributes>
+UDP sending
+</panel_attributes>
+    <additional_attributes>180.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
-      <y>200</y>
-      <w>70</w>
-      <h>50</h>
+      <x>510</x>
+      <y>400</y>
+      <w>300</w>
+      <h>190</h>
     </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;30.0;50.0;10.0</additional_attributes>
+    <panel_attributes>lt=&lt;-
+UDP sending
+</panel_attributes>
+    <additional_attributes>200.0;10.0;200.0;170.0;10.0;170.0</additional_attributes>
   </element>
   <element>
-    <id>UMLNote</id>
+    <id>UMLState</id>
     <coordinates>
-      <x>580</x>
-      <y>150</y>
-      <w>80</w>
-      <h>40</h>
+      <x>1010</x>
+      <y>720</y>
+      <w>100</w>
+      <h>70</h>
     </coordinates>
-    <panel_attributes>Multicast</panel_attributes>
+    <panel_attributes>Interface TCP
+--
+localhost:2205</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1050</x>
+      <y>400</y>
+      <w>90</w>
+      <h>340</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Send list
+of active
+musicians</panel_attributes>
+    <additional_attributes>10.0;320.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>180</x>
+      <y>100</y>
+      <w>1060</w>
+      <h>570</h>
+    </coordinates>
+    <panel_attributes>Docker
+valign=top</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>450</x>
-      <y>60</y>
-      <w>140</w>
-      <h>60</h>
+      <x>580</x>
+      <y>230</y>
+      <w>110</w>
+      <h>90</h>
     </coordinates>
-    <panel_attributes>Protocol.js
---
-port
-adresse de multicast</panel_attributes>
+    <panel_attributes>lt=.
+halign=left
+{
+  uuid,
+  sound,
+  timestamp
+}</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>320</x>
-      <y>80</y>
-      <w>150</w>
-      <h>120</h>
+      <x>940</x>
+      <y>470</y>
+      <w>110</w>
+      <h>130</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>130.0;10.0;10.0;100.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>580</x>
-      <y>80</y>
-      <w>160</w>
-      <h>110</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;140.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>340</x>
-      <y>180</y>
-      <w>60</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;30.0;40.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>340</x>
-      <y>200</y>
-      <w>60</w>
-      <h>50</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;40.0;30.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>340</x>
-      <y>200</y>
-      <w>70</w>
-      <h>30</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;50.0;10.0</additional_attributes>
+    <panel_attributes>lt=.
+halign=left
+[
+ { 
+   uuid,
+   instrument,
+   activeSince
+ },
+...]</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
