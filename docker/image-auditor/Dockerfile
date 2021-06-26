@@ -1,8 +1,8 @@
 FROM node:14.17
-MAINTAINER Olivier Liechti <olivier.liechti@heig-vd.ch>
+LABEL authors="Alois CHRISTEN, Delphine SCHERLER"
 
 #
-# When we build the image, we copy the executable jar in the image file system. 
+# When we build the image, we copy the sources in the image file system. 
 #
 COPY src /opt/app/
 
